@@ -2,11 +2,18 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { ChevronLeft } from 'lucide-react'
 
 const Client = () => {
+  const router = useRouter()
   const [isAddingToCart, setIsAddingToCart] = useState(false)
   const [showBackCover, setShowBackCover] = useState(false)
+  
+  const handleBackClick = () => {
+    router.push('/')
+  }
 
   const handleAddToCart = () => {
     setIsAddingToCart(true)
@@ -42,6 +49,17 @@ const Client = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 py-8">
+        {/* Back Button */}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={handleBackClick} 
+          className="mb-4 -ml-2 text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ChevronLeft className="mr-1 h-4 w-4" />
+          Back
+        </Button>
+        
         {/* Mobile Hero Section */}
         <div className="md:hidden">
           <div className="flex flex-col items-center">
@@ -152,40 +170,102 @@ const Client = () => {
                 {isAddingToCart ? 'Adding to cart...' : 'Buy Now'}
               </Button>
               
-              <div className="prose dark:prose-invert max-w-none">
-                <p className="mb-4">
-                  When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where aswang run the most-wanted kidnapping rings, where kapre are the kingpins of crime, and engkanto slip through the cracks and steal your most precious possessions.
-                </p>
-                <p className="mb-4">
-                  When crime takes a turn for the weird, the police call Alexandra Trese.
-                </p>
+              <div className="bg-muted/40 rounded-lg p-5 border border-muted shadow-sm">
+                <h3 className="text-xl font-semibold mb-4 text-primary">Synopsis</h3>
+                <div className="prose dark:prose-invert max-w-none">
+                  <p className="mb-4 leading-relaxed">
+                    When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where <span className="font-medium text-primary-foreground">aswang</span> run the most-wanted kidnapping rings, where <span className="font-medium text-primary-foreground">kapre</span> are the kingpins of crime, and <span className="font-medium text-primary-foreground">engkanto</span> slip through the cracks and steal your most precious possessions.
+                  </p>
+                  <p className="text-base italic border-l-2 border-primary pl-4 py-2">
+                    When crime takes a turn for the weird, the police call Alexandra Trese.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
         
         {/* Mobile Description - only shown on mobile */}
-        <div className="md:hidden prose dark:prose-invert max-w-none mb-8">
-          <p className="mb-4">
-            When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where aswang run the most-wanted kidnapping rings, where kapre are the kingpins of crime, and engkanto slip through the cracks and steal your most precious possessions.
-          </p>
-          <p className="mb-4">
-            When crime takes a turn for the weird, the police call Alexandra Trese.
-          </p>
+        <div className="md:hidden mb-8">
+          <div className="bg-muted/40 rounded-lg p-4 border border-muted shadow-sm">
+            <h3 className="text-lg font-semibold mb-3 text-primary">Synopsis</h3>
+            <div className="prose dark:prose-invert max-w-none">
+              <p className="mb-4 text-sm leading-relaxed">
+                When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where <span className="font-medium text-primary-foreground">aswang</span> run the most-wanted kidnapping rings, where <span className="font-medium text-primary-foreground">kapre</span> are the kingpins of crime, and <span className="font-medium text-primary-foreground">engkanto</span> slip through the cracks and steal your most precious possessions.
+              </p>
+              <p className="text-sm italic border-l-2 border-primary pl-3 py-1">
+                When crime takes a turn for the weird, the police call Alexandra Trese.
+              </p>
+            </div>
+          </div>
         </div>
         
         {/* Cases Section */}
         <div className="mb-8">
-          <h2 className="text-xl font-bold mb-4">Trese: Murder on Balete Drive cases:</h2>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>Case 1: At the Intersection of Balete and 13th Street</li>
-            <li>Case 2: Rules of the Race</li>
-            <li>Case 3: The Tragic Case of Dr. Burgos</li>
-            <li>Case 4: Our Secret Constellation</li>
-          </ul>
-          <p className="mt-4 text-sm">
-            This 2021 edition contains magnificently remastered artwork as seen in the US edition. It has 16 additional comic book pages showing extended action scenes and features concept sketches from 2005 when TRESE was created. The release of this book marks the 13th publication anniversary of &quot;Murder on Balete Drive.&quot;
-          </p>
+          <h2 className="text-xl font-bold mb-4 flex items-center">
+            <span className="bg-primary/10 text-primary px-3 py-1 rounded-md mr-2">Cases</span>
+            <span>Featured in this Volume</span>
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* Case 1 */}
+            <div className="bg-muted/30 rounded-lg p-3 border border-muted hover:shadow-md transition-shadow group">
+              <div className="flex items-start">
+                <div className="bg-primary/20 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mr-3">
+                  1
+                </div>
+                <div>
+                  <h3 className="font-semibold group-hover:text-primary transition-colors">At the Intersection of Balete and 13th Street</h3>
+                  <p className="text-sm text-muted-foreground mt-1">A mysterious death at a haunted intersection leads Trese to uncover an ancient pact.</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Case 2 */}
+            <div className="bg-muted/30 rounded-lg p-3 border border-muted hover:shadow-md transition-shadow group">
+              <div className="flex items-start">
+                <div className="bg-primary/20 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mr-3">
+                  2
+                </div>
+                <div>
+                  <h3 className="font-semibold group-hover:text-primary transition-colors">Rules of the Race</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Street racers encounter supernatural competitors in a high-stakes midnight competition.</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Case 3 */}
+            <div className="bg-muted/30 rounded-lg p-3 border border-muted hover:shadow-md transition-shadow group">
+              <div className="flex items-start">
+                <div className="bg-primary/20 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mr-3">
+                  3
+                </div>
+                <div>
+                  <h3 className="font-semibold group-hover:text-primary transition-colors">The Tragic Case of Dr. Burgos</h3>
+                  <p className="text-sm text-muted-foreground mt-1">A respected doctor&apos;s mysterious disappearance reveals dark secrets and forbidden rituals.</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Case 4 */}
+            <div className="bg-muted/30 rounded-lg p-3 border border-muted hover:shadow-md transition-shadow group">
+              <div className="flex items-start">
+                <div className="bg-primary/20 text-primary font-bold rounded-full w-8 h-8 flex items-center justify-center shrink-0 mr-3">
+                  4
+                </div>
+                <div>
+                  <h3 className="font-semibold group-hover:text-primary transition-colors">Our Secret Constellation</h3>
+                  <p className="text-sm text-muted-foreground mt-1">Trese investigates a series of deaths connected to an ancient celestial pattern.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-5 bg-primary/5 p-3 rounded-lg border border-primary/10 text-sm">
+            <p className="leading-relaxed">
+              This 2021 edition contains magnificently remastered artwork as seen in the US edition. It has 16 additional comic book pages showing extended action scenes and features concept sketches from 2005 when TRESE was created. The release of this book marks the 13th publication anniversary of &quot;Murder on Balete Drive.&quot;
+            </p>
+          </div>
         </div>
         
         {/* Book Details */}
