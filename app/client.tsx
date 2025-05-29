@@ -2,33 +2,33 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { cn } from '@/lib/utils'
-import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX } from 'lucide-react'
+import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play } from 'lucide-react'
 
 // Video data
 const reelsData = [
-  {
+    {
     id: 1,
-    videoSrc: '/videos/arf.mp4',
-    username: '@doggouser',
-    caption: 'Just a happy doggo saying arf! 🐶 #doggo #cute',
-    likes: '10.5K',
-    comments: '342',
-    music: 'Original Audio'
-  },
-  {
-    id: 2,
     videoSrc: '/videos/meow.mp4',
     username: '@catuser',
     caption: 'Meow meow! 🐱 #cat #adorable',
     likes: '15.2K',
     comments: '421',
     music: 'Original Audio'
+  },
+  {
+    id: 2,
+    videoSrc: '/videos/arf.mp4',
+    username: '@doggouser',
+    caption: 'Just a happy doggo saying arf! 🐶 #doggo #cute',
+    likes: '10.5K',
+    comments: '342',
+    music: 'Original Audio'
   }
 ]
 
 const Client = () => {
   const [currentReelIndex, setCurrentReelIndex] = useState(0)
-  const [isMuted, setIsMuted] = useState(false)
+  const [isMuted, setIsMuted] = useState(true) // Set to true by default to allow autoplay
   
   // Handle swipe to next/previous reel
   const handleSwipe = (direction: 'up' | 'down') => {
@@ -101,15 +101,22 @@ interface ReelsVideoProps {
 
 const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsMuted }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isPaused, setIsPaused] = useState(true)
   
   // Handle video playback based on active state
   useEffect(() => {
     if (videoRef.current) {
       if (isActive) {
         videoRef.current.currentTime = 0
-        videoRef.current.play().catch(err => console.error('Error playing video:', err))
+        videoRef.current.play()
+          .then(() => setIsPaused(false))
+          .catch(err => {
+            console.error('Error playing video:', err)
+            setIsPaused(true)
+          })
       } else {
         videoRef.current.pause()
+        setIsPaused(true)
       }
     }
   }, [isActive])
@@ -125,9 +132,15 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
   const togglePlayPause = () => {
     if (videoRef.current) {
       if (videoRef.current.paused) {
-        videoRef.current.play().catch(err => console.error('Error playing video:', err))
+        videoRef.current.play()
+          .then(() => setIsPaused(false))
+          .catch(err => {
+            console.error('Error playing video:', err)
+            setIsPaused(true)
+          })
       } else {
         videoRef.current.pause()
+        setIsPaused(true)
       }
     }
   }
@@ -152,8 +165,18 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
         className="h-full w-full object-cover"
         loop
         playsInline
+        muted={isMuted}
         onClick={togglePlayPause}
       />
+      
+      {/* Play button overlay - only shown when video is paused */}
+      {isPaused && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="bg-black/30 rounded-full p-4">
+            <Play className="w-12 h-12 text-white" />
+          </div>
+        </div>
+      )}
       
       {/* UI Overlay */}
       <div className="absolute inset-0 pointer-events-none">
