@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { cn } from '@/lib/utils'
-import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play } from 'lucide-react'
+import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play, Home, Search, Film, ShoppingBag, User } from 'lucide-react'
 
 // Video data
 const reelsData = [
@@ -84,8 +84,27 @@ const Client = () => {
       </div>
       
       {/* Navigation hints */}
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-white/50 text-xs">
+      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 text-white/50 text-xs">
         Swipe up for next video
+      </div>
+      
+      {/* Instagram-style footer navigation */}
+      <div className="fixed bottom-0 left-0 right-0 h-14 bg-black border-t border-gray-800 flex items-center justify-around px-2 z-20">
+        <button className="p-2 text-white">
+          <Home className="w-6 h-6" />
+        </button>
+        <button className="p-2 text-white">
+          <Search className="w-6 h-6" />
+        </button>
+        <button className="p-2 text-white/90">
+          <Film className="w-6 h-6" strokeWidth={2.5} />
+        </button>
+        <button className="p-2 text-white">
+          <ShoppingBag className="w-6 h-6" />
+        </button>
+        <button className="p-2 text-white">
+          <User className="w-6 h-6" />
+        </button>
       </div>
     </div>
   )
@@ -188,7 +207,7 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
       </div>
       
       {/* User info and caption */}
-      <div className="absolute bottom-6 left-4 right-16 text-white pointer-events-none">
+      <div className="absolute bottom-20 left-4 right-16 text-white pointer-events-none">
         <div className="font-bold text-sm">{reel.username}</div>
         <div className="text-sm mt-1 line-clamp-2">{reel.caption}</div>
         <div className="flex items-center mt-2 text-xs">
@@ -200,7 +219,7 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
       </div>
       
       {/* Right side action buttons */}
-      <div className="absolute right-4 bottom-24 flex flex-col items-center gap-6 text-white">
+      <div className="absolute right-4 bottom-36 flex flex-col items-center gap-6 text-white">
         {/* Like button */}
         <div className="flex flex-col items-center pointer-events-auto">
           <button className="w-10 h-10 flex items-center justify-center">
