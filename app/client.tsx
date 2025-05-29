@@ -353,8 +353,8 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
         </div>
       )}
       
-      {/* Content container - restructured for better layout */}
-      <div className="absolute bottom-20 left-4 right-16 flex flex-col text-white">
+      {/* Content container - moved higher to avoid overlap with audio */}
+      <div className="absolute bottom-28 left-4 right-16 flex flex-col text-white">
         {/* Sponsored label - only for ads */}
         {reel.isAd && (
           <div className="flex items-center text-xs text-gray-300 mb-1.5 opacity-90">
@@ -452,8 +452,8 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
         </div>
       </div>
       
-      {/* Audio button with rotating animation - repositioned */}
-      <div className="absolute bottom-24 left-4 pointer-events-auto">
+      {/* Audio button with rotating animation - repositioned below content */}
+      <div className="absolute bottom-16 left-4 pointer-events-auto">
         <button className="flex items-center justify-center h-8 px-3 bg-black/40 border border-white/20 rounded-full">
           <motion.div
             style={{ rotate: `${musicRotation}deg` }}
