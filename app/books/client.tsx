@@ -174,7 +174,7 @@ const Client = () => {
                 <h3 className="text-xl font-semibold mb-4 text-primary">Synopsis</h3>
                 <div className="prose dark:prose-invert max-w-none">
                   <p className="mb-4 leading-relaxed">
-                    When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where <span className="font-medium text-primary-foreground">aswang</span> run the most-wanted kidnapping rings, where <span className="font-medium text-primary-foreground">kapre</span> are the kingpins of crime, and <span className="font-medium text-primary-foreground">engkanto</span> slip through the cracks and steal your most precious possessions.
+                    When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where <span className="font-medium text-primary">aswang</span> run the most-wanted kidnapping rings, where <span className="font-medium text-primary">kapre</span> are the kingpins of crime, and <span className="font-medium text-primary">engkanto</span> slip through the cracks and steal your most precious possessions.
                   </p>
                   <p className="text-base italic border-l-2 border-primary pl-4 py-2">
                     When crime takes a turn for the weird, the police call Alexandra Trese.
@@ -191,7 +191,7 @@ const Client = () => {
             <h3 className="text-lg font-semibold mb-3 text-primary">Synopsis</h3>
             <div className="prose dark:prose-invert max-w-none">
               <p className="mb-4 text-sm leading-relaxed">
-                When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where <span className="font-medium text-primary-foreground">aswang</span> run the most-wanted kidnapping rings, where <span className="font-medium text-primary-foreground">kapre</span> are the kingpins of crime, and <span className="font-medium text-primary-foreground">engkanto</span> slip through the cracks and steal your most precious possessions.
+                When the sun sets in the city of Manila, don&apos;t you dare make a wrong turn and end up on that dimly-lit side of the metro, where <span className="font-medium text-primary">aswang</span> run the most-wanted kidnapping rings, where <span className="font-medium text-primary">kapre</span> are the kingpins of crime, and <span className="font-medium text-primary">engkanto</span> slip through the cracks and steal your most precious possessions.
               </p>
               <p className="text-sm italic border-l-2 border-primary pl-3 py-1">
                 When crime takes a turn for the weird, the police call Alexandra Trese.
