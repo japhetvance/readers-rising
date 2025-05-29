@@ -1,29 +1,34 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play, Home, Search, Film, ShoppingBag, User } from 'lucide-react'
+import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play, Home, Search, Film, User, Music, Plus } from 'lucide-react'
 import { motion, AnimatePresence, useAnimation, PanInfo } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 // Video data
 const reelsData = [
-    {
+  {
     id: 1,
     videoSrc: '/videos/meow.mp4',
-    username: '@catuser',
+    username: 'catuser',
+    userAvatar: 'https://i.pravatar.cc/150?img=11',
     caption: 'Meow meow! 🐱 #cat #adorable',
     likes: '15.2K',
     comments: '421',
-    music: 'Original Audio'
+    music: 'Original Audio',
+    isFollowing: false
   },
   {
     id: 2,
     videoSrc: '/videos/mwehehe.mp4',
-    username: '@doggouser',
+    username: 'doggouser',
+    userAvatar: 'https://i.pravatar.cc/150?img=8',
     caption: 'Just a happy doggo saying arf! 🐶 #doggo #cute',
     likes: '10.5K',
     comments: '342',
     music: 'Original Audio',
+    isFollowing: true,
     isAd: true,
     adLabel: 'Sponsored',
     adButtonText: 'Shop Now',
@@ -37,6 +42,8 @@ const Client = () => {
   const [isDragging, setIsDragging] = useState(false)
   const [direction, setDirection] = useState<'up' | 'down' | null>(null)
   const controls = useAnimation()
+  const [progress, setProgress] = useState(0)
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null)
   
   // For keyboard navigation
   useEffect(() => {
@@ -52,6 +59,35 @@ const Client = () => {
     
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [currentReelIndex])
+  
+  // Reset and start progress when reel changes
+  useEffect(() => {
+    // Clear any existing interval
+    if (progressIntervalRef.current) {
+      clearInterval(progressIntervalRef.current)
+    }
+    
+    // Reset progress
+    setProgress(0)
+    
+    // Start new progress interval
+    progressIntervalRef.current = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(progressIntervalRef.current as NodeJS.Timeout)
+          return 100
+        }
+        return prev + 0.1
+      })
+    }, 30) // Adjust timing based on video length
+    
+    // Cleanup on unmount
+    return () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current)
+      }
+    }
   }, [currentReelIndex])
   
   // Handle drag gestures
@@ -80,6 +116,18 @@ const Client = () => {
 
   return (
     <div className="fixed inset-0 bg-black overflow-hidden">
+      {/* Instagram-style progress bar */}
+      <div className="absolute top-0 left-0 right-0 z-30 px-2 pt-2">
+        <div className="h-0.5 bg-gray-500/30 rounded-full w-full">
+          <motion.div 
+            className="h-full bg-white rounded-full"
+            initial={{ width: "0%" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ ease: "linear" }}
+          />
+        </div>
+      </div>
+      
       {/* Reels container */}
       <motion.div 
         className="h-full w-full relative"
@@ -123,19 +171,29 @@ const Client = () => {
         </AnimatePresence>
       </motion.div>
       
+      {/* Instagram-style header */}
+      <div className="fixed top-4 left-0 right-0 flex items-center justify-between px-4 z-20 mt-3">
+        <div className="flex items-center">
+          <span className="text-white font-semibold text-lg">Reels</span>
+        </div>
+        <button className="p-2 text-white">
+          <Camera className="w-6 h-6" />
+        </button>
+      </div>
+      
       {/* Instagram-style footer navigation */}
-      <div className="fixed bottom-0 left-0 right-0 h-14 bg-black border-t border-gray-800 flex items-center justify-around px-2 z-20">
+      <div className="fixed bottom-0 left-0 right-0 h-14 bg-black border-t border-gray-800/50 flex items-center justify-around px-2 z-20">
         <button className="p-2 text-white">
           <Home className="w-6 h-6" />
         </button>
         <button className="p-2 text-white">
           <Search className="w-6 h-6" />
         </button>
+        <button className="p-2 text-white">
+          <Plus className="w-6 h-6 bg-gray-800 rounded-md p-0.5" />
+        </button>
         <button className="p-2 text-white/90">
           <Film className="w-6 h-6" strokeWidth={2.5} />
-        </button>
-        <button className="p-2 text-white">
-          <ShoppingBag className="w-6 h-6" />
         </button>
         <button className="p-2 text-white">
           <User className="w-6 h-6" />
@@ -144,6 +202,23 @@ const Client = () => {
     </div>
   )
 }
+
+// Instagram Camera Icon
+const Camera = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+    <circle cx="12" cy="13" r="3" />
+  </svg>
+);
 
 // Individual Reel Video Component
 interface ReelsVideoProps {
@@ -162,6 +237,26 @@ interface ReelsVideoProps {
 const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsMuted, isDragging = false }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPaused, setIsPaused] = useState(true)
+  const [isLiked, setIsLiked] = useState(false)
+  const [musicRotation, setMusicRotation] = useState(0)
+  
+  // Rotate music icon
+  useEffect(() => {
+    let animationFrame: number;
+    
+    const rotateMusicIcon = () => {
+      setMusicRotation(prev => (prev + 1) % 360);
+      animationFrame = requestAnimationFrame(rotateMusicIcon);
+    };
+    
+    if (isActive && !isPaused) {
+      animationFrame = requestAnimationFrame(rotateMusicIcon);
+    }
+    
+    return () => {
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [isActive, isPaused]);
   
   // Handle video playback based on active state
   useEffect(() => {
@@ -245,10 +340,10 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
       {/* UI Overlay */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Top gradient overlay */}
-        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/50 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/70 to-transparent" />
         
         {/* Bottom gradient overlay */}
-        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black/70 to-transparent" />
       </div>
       
       {/* Subtle ad indicator overlay for ads */}
@@ -267,8 +362,29 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
           </div>
         )}
         
-        {/* Username - always shown */}
-        <div className="font-bold text-sm mb-2.5">{reel.username}</div>
+        {/* Username with avatar and follow button - always shown */}
+        <div className="flex items-center mb-3">
+          <Avatar className="h-9 w-9 border border-gray-500/30">
+            <AvatarImage src={reel.userAvatar} alt={reel.username} />
+            <AvatarFallback>{reel.username.substring(0, 2).toUpperCase()}</AvatarFallback>
+          </Avatar>
+          
+          <div className="ml-2 flex items-center">
+            <span className="font-semibold text-sm">@{reel.username}</span>
+            <span className="mx-1.5 text-gray-400">•</span>
+            {!reel.isFollowing ? (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-7 text-xs font-semibold text-blue-500 hover:text-blue-400 p-0"
+              >
+                Follow
+              </Button>
+            ) : (
+              <span className="text-xs text-gray-400">Following</span>
+            )}
+          </div>
+        </div>
         
         {/* Advertisement button and brand - only for ads */}
         {reel.isAd && (
@@ -293,21 +409,21 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
         {/* Caption - always shown */}
         <div className="text-sm line-clamp-2 pointer-events-none">{reel.caption}</div>
         
-        {/* Music info - always shown */}
-        <div className="flex items-center mt-2 text-xs pointer-events-none">
-          <span className="flex items-center">
-            <span className="w-3 h-3 rounded-full bg-white/80 mr-2" />
-            {reel.music}
-          </span>
-        </div>
+      {/* Music info - removed from here and moved to bottom */}
       </div>
       
       {/* Right side action buttons */}
-      <div className="absolute right-4 bottom-36 flex flex-col items-center gap-6 text-white">
+      <div className="absolute right-2 bottom-36 flex flex-col items-center gap-6 text-white">
         {/* Like button */}
         <div className="flex flex-col items-center pointer-events-auto">
-          <button className="w-10 h-10 flex items-center justify-center">
-            <Heart className="w-7 h-7" />
+          <button 
+            className="w-10 h-10 flex items-center justify-center"
+            onClick={() => setIsLiked(!isLiked)}
+          >
+            <Heart 
+              className={`w-7 h-7 ${isLiked ? 'fill-red-500 text-red-500' : ''}`} 
+              fill={isLiked ? 'currentColor' : 'none'}
+            />
           </button>
           <span className="text-xs mt-1">{reel.likes}</span>
         </div>
@@ -336,8 +452,21 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
         </div>
       </div>
       
+      {/* Audio button with rotating animation - repositioned */}
+      <div className="absolute bottom-24 left-4 pointer-events-auto">
+        <button className="flex items-center justify-center h-8 px-3 bg-black/40 border border-white/20 rounded-full">
+          <motion.div
+            style={{ rotate: `${musicRotation}deg` }}
+            className="mr-2"
+          >
+            <Music className="w-3 h-3 text-white" />
+          </motion.div>
+          <span className="text-xs text-white font-medium">{reel.music}</span>
+        </button>
+      </div>
+      
       {/* Volume control - make this clickable */}
-      <div className="absolute top-4 right-4 pointer-events-auto">
+      <div className="absolute top-14 right-4 pointer-events-auto z-30">
         <button 
           className="w-10 h-10 flex items-center justify-center text-white bg-black/30 rounded-full"
           onClick={toggleMute}
