@@ -45,7 +45,7 @@ const Client = () => {
         {/* Mobile Hero Section */}
         <div className="md:hidden">
           <div className="flex flex-col items-center">
-            <div className="relative w-full max-w-[300px] aspect-[2/3] mb-6">
+            <div className="relative w-full max-w-[300px] aspect-[2/3] mb-3">
               <Image
                 src={showBackCover ? '/pictures/main-book/back.webp' : '/pictures/main-book/front.webp'}
                 alt="Trese: Murder on Balete Drive"
@@ -53,15 +53,33 @@ const Client = () => {
                 className="object-cover rounded-lg shadow-lg"
                 priority
               />
+            </div>
+            
+            {/* Thumbnails for mobile */}
+            <div className="flex gap-2 mb-6">
               <button 
-                onClick={() => setShowBackCover(!showBackCover)}
-                className="absolute bottom-3 right-3 bg-black/70 text-white p-2 rounded-full"
-                aria-label={showBackCover ? "Show front cover" : "Show back cover"}
+                onClick={() => setShowBackCover(false)}
+                className={`relative w-16 h-24 rounded-md overflow-hidden border-2 transition-all ${!showBackCover ? 'border-primary' : 'border-transparent opacity-70'}`}
+                aria-label="Show front cover"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
+                <Image
+                  src="/pictures/main-book/front.webp"
+                  alt="Front cover thumbnail"
+                  fill
+                  className="object-cover"
+                />
+              </button>
+              <button 
+                onClick={() => setShowBackCover(true)}
+                className={`relative w-16 h-24 rounded-md overflow-hidden border-2 transition-all ${showBackCover ? 'border-primary' : 'border-transparent opacity-70'}`}
+                aria-label="Show back cover"
+              >
+                <Image
+                  src="/pictures/main-book/back.webp"
+                  alt="Back cover thumbnail"
+                  fill
+                  className="object-cover"
+                />
               </button>
             </div>
             
@@ -81,24 +99,44 @@ const Client = () => {
         {/* Desktop Hero Section */}
         <div className="hidden md:block mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="relative aspect-[2/3] max-w-[400px] mx-auto">
-              <Image
-                src={showBackCover ? '/pictures/main-book/back.webp' : '/pictures/main-book/front.webp'}
-                alt="Trese: Murder on Balete Drive"
-                fill
-                className="object-cover rounded-lg shadow-lg"
-                priority
-              />
-              <button 
-                onClick={() => setShowBackCover(!showBackCover)}
-                className="absolute bottom-4 right-4 bg-black/70 text-white p-2 rounded-full"
-                aria-label={showBackCover ? "Show front cover" : "Show back cover"}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-              </button>
+            <div className="flex flex-col items-center">
+              <div className="relative aspect-[2/3] w-full max-w-[400px] mb-4">
+                <Image
+                  src={showBackCover ? '/pictures/main-book/back.webp' : '/pictures/main-book/front.webp'}
+                  alt="Trese: Murder on Balete Drive"
+                  fill
+                  className="object-cover rounded-lg shadow-lg"
+                  priority
+                />
+              </div>
+              
+              {/* Thumbnails for desktop */}
+              <div className="flex gap-3 mb-4">
+                <button 
+                  onClick={() => setShowBackCover(false)}
+                  className={`relative w-20 h-28 rounded-md overflow-hidden border-2 transition-all ${!showBackCover ? 'border-primary' : 'border-transparent opacity-70'}`}
+                  aria-label="Show front cover"
+                >
+                  <Image
+                    src="/pictures/main-book/front.webp"
+                    alt="Front cover thumbnail"
+                    fill
+                    className="object-cover"
+                  />
+                </button>
+                <button 
+                  onClick={() => setShowBackCover(true)}
+                  className={`relative w-20 h-28 rounded-md overflow-hidden border-2 transition-all ${showBackCover ? 'border-primary' : 'border-transparent opacity-70'}`}
+                  aria-label="Show back cover"
+                >
+                  <Image
+                    src="/pictures/main-book/back.webp"
+                    alt="Back cover thumbnail"
+                    fill
+                    className="object-cover"
+                  />
+                </button>
+              </div>
             </div>
             
             <div>
