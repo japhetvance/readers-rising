@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play, Home, Search, Film, ShoppingBag, User } from 'lucide-react'
 import { motion, AnimatePresence, useAnimation, PanInfo } from 'framer-motion'
+import { Button } from '@/components/ui/button'
 
 // Video data
 const reelsData = [
@@ -17,12 +18,16 @@ const reelsData = [
   },
   {
     id: 2,
-    videoSrc: '/videos/arf.mp4',
+    videoSrc: '/videos/mwehehe.mp4',
     username: '@doggouser',
     caption: 'Just a happy doggo saying arf! 🐶 #doggo #cute',
     likes: '10.5K',
     comments: '342',
-    music: 'Original Audio'
+    music: 'Original Audio',
+    isAd: true,
+    adLabel: 'Sponsored',
+    adButtonText: 'Shop Now',
+    adRedirectUrl: '/shop'
   }
 ]
 
@@ -142,7 +147,12 @@ const Client = () => {
 
 // Individual Reel Video Component
 interface ReelsVideoProps {
-  reel: typeof reelsData[0]
+  reel: typeof reelsData[0] & {
+    isAd?: boolean;
+    adLabel?: string;
+    adButtonText?: string;
+    adRedirectUrl?: string;
+  }
   isActive: boolean
   isMuted: boolean
   setIsMuted: React.Dispatch<React.SetStateAction<boolean>>
@@ -241,11 +251,50 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
       
-      {/* User info and caption */}
-      <div className="absolute bottom-20 left-4 right-16 text-white pointer-events-none">
-        <div className="font-bold text-sm">{reel.username}</div>
-        <div className="text-sm mt-1 line-clamp-2">{reel.caption}</div>
-        <div className="flex items-center mt-2 text-xs">
+      {/* Subtle ad indicator overlay for ads */}
+      {reel.isAd && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+      )}
+      
+      {/* Content container - restructured for better layout */}
+      <div className="absolute bottom-20 left-4 right-16 flex flex-col text-white">
+        {/* Sponsored label - only for ads */}
+        {reel.isAd && (
+          <div className="flex items-center text-xs text-gray-300 mb-1.5 opacity-90">
+            {reel.adLabel} <span className="mx-1.5 text-gray-400">•</span> <span className="text-gray-400">Instagram Ad</span>
+          </div>
+        )}
+        
+        {/* Username - always shown */}
+        <div className="font-bold text-sm mb-2.5">{reel.username}</div>
+        
+        {/* Advertisement button and brand - only for ads */}
+        {reel.isAd && (
+          <div className="pointer-events-auto mb-2.5 z-10">
+            
+            <Button 
+              variant="default" 
+              size="sm"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-md px-4 py-1.5 w-28 shadow-md"
+              onClick={() => window.location.href = reel.adRedirectUrl}
+            >
+              {reel.adButtonText}
+            </Button>
+            
+            {/* Learn more text */}
+            <div className="mt-1.5 text-xs text-gray-300">
+              <span className="cursor-pointer hover:underline">Learn More</span>
+            </div>
+          </div>
+        )}
+        
+        {/* Caption - always shown */}
+        <div className="text-sm line-clamp-2 pointer-events-none">{reel.caption}</div>
+        
+        {/* Music info - always shown */}
+        <div className="flex items-center mt-2 text-xs pointer-events-none">
           <span className="flex items-center">
             <span className="w-3 h-3 rounded-full bg-white/80 mr-2" />
             {reel.music}
