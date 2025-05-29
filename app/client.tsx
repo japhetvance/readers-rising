@@ -32,7 +32,7 @@ const reelsData = [
     isAd: true,
     adLabel: 'Sponsored',
     adButtonText: 'Explore Book',
-    adRedirectUrl: '/shop'
+    adRedirectUrl: '/books'
   }
 ]
 
