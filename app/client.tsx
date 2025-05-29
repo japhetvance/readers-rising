@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play, Home, Search, Film, User, Music, Plus } from 'lucide-react'
+import { Heart, MessageCircle, Send, MoreHorizontal, Volume2, VolumeX, Play, Home, Search, Film, User, Music, Plus, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence, useAnimation, PanInfo } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -11,9 +11,9 @@ const reelsData = [
   {
     id: 1,
     videoSrc: '/videos/meow.mp4',
-    username: 'catuser',
-    userAvatar: 'https://i.pravatar.cc/150?img=11',
-    caption: 'Meow meow! 🐱 #cat #adorable',
+    username: 'kittyminaj',
+    userAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9KTL0bZEmbWhR-2ORvse9yvbj52KbU_hJhw&s',
+    caption: 'wiwiwi uyaya wawawe 🐱 #kuting',
     likes: '15.2K',
     comments: '421',
     music: 'Original Audio',
@@ -22,16 +22,16 @@ const reelsData = [
   {
     id: 2,
     videoSrc: '/videos/mwehehe.mp4',
-    username: 'doggouser',
-    userAvatar: 'https://i.pravatar.cc/150?img=8',
-    caption: 'Just a happy doggo saying arf! 🐶 #doggo #cute',
+    username: 'aldenricharge',
+    userAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREnDhGr2pnhpeWBPyRqrPKON5W3PGpMUwF1Q&s',
+    caption: 'God gave me you 🎵🙏 #blessed',
     likes: '10.5K',
     comments: '342',
     music: 'Original Audio',
     isFollowing: true,
     isAd: true,
     adLabel: 'Sponsored',
-    adButtonText: 'Shop Now',
+    adButtonText: 'Explore Book',
     adRedirectUrl: '/shop'
   }
 ]
@@ -393,10 +393,13 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
             <Button 
               variant="default" 
               size="sm"
-              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-md px-4 py-1.5 w-28 shadow-md"
+              className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-md px-4 py-1.5 shadow-md w-full"
               onClick={() => window.location.href = reel.adRedirectUrl}
             >
-              {reel.adButtonText}
+              <div className="flex items-center justify-between w-full">
+                {reel.adButtonText}
+                <ChevronRight className="inline-block ml-1 w-4 h-4" />
+              </div>
             </Button>
             
             {/* Learn more text */}
