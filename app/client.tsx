@@ -16,7 +16,7 @@ const reelsData = [
     caption: 'wiwiwi uyaya wawawe 🐱 #catofreels',
     likes: '15.2K',
     comments: '421',
-    music: 'Original Audio',
+    music: 'from the start (meowfey) - j1gggs',
     isFollowing: false
   },
   {
@@ -38,7 +38,7 @@ const reelsData = [
     caption: 'Escape into thrilling worlds while I play 🎮 #booklovers #subwaysurfers',
     likes: '24.7K',
     comments: '873',
-    music: 'Epic Storytelling - Audiobook Mix',
+    music: 'Original Audio',
     isFollowing: false,
     isAd: true,
     adLabel: 'Sponsored Partnership',
