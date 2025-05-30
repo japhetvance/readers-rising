@@ -13,7 +13,7 @@ const reelsData = [
     videoSrc: '/videos/meow.mp4',
     username: 'kittyminaj',
     userAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9KTL0bZEmbWhR-2ORvse9yvbj52KbU_hJhw&s',
-    caption: 'wiwiwi uyaya wawawe 🐱 #kuting',
+    caption: 'wiwiwi uyaya wawawe 🐱 #catofreels',
     likes: '15.2K',
     comments: '421',
     music: 'Original Audio',
@@ -27,13 +27,24 @@ const reelsData = [
     caption: 'God gave me you 🎵🙏 #blessed',
     likes: '10.5K',
     comments: '342',
-    music: 'Original Audio',
+    music: 'muhehehe - cat remix',
     isFollowing: true,
+  },
+  {
+    id: 3,
+    videoSrc: '/videos/subway.mp4',
+    username: 'sigbinenjoyer',
+    userAvatar: 'https://i.pinimg.com/474x/48/3b/16/483b1646321fa65ab7343aff3f05313b.jpg',
+    caption: 'Escape into thrilling worlds while I play 🎮 #booklovers #subwaysurfers',
+    likes: '24.7K',
+    comments: '873',
+    music: 'Epic Storytelling - Audiobook Mix',
+    isFollowing: false,
     isAd: true,
-    adLabel: 'Sponsored',
+    adLabel: 'Sponsored Partnership',
     adButtonText: 'Explore Book',
     adRedirectUrl: '/books'
-  }
+    },
 ]
 
 const Client = () => {
