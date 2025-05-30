@@ -35,7 +35,7 @@ const reelsData = [
     videoSrc: '/videos/realnareel.mp4',
     username: 'sigbinenjoyer',
     userAvatar: 'https://i.pinimg.com/474x/48/3b/16/483b1646321fa65ab7343aff3f05313b.jpg',
-    caption: 'Escape into thrilling worlds while I play 🎮 #booklovers #subwaysurfers',
+    caption: 'Escape into thrilling worlds while I play 🎮 #readersrising #booklovers #subwaysurfers',
     likes: '24.7K',
     comments: '873',
     music: 'Original Audio',
