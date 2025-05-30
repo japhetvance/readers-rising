@@ -32,7 +32,7 @@ const reelsData = [
   },
   {
     id: 3,
-    videoSrc: '/videos/subway.mp4',
+    videoSrc: '/videos/realnareel.mp4',
     username: 'sigbinenjoyer',
     userAvatar: 'https://i.pinimg.com/474x/48/3b/16/483b1646321fa65ab7343aff3f05313b.jpg',
     caption: 'Escape into thrilling worlds while I play 🎮 #booklovers #subwaysurfers',
@@ -400,8 +400,8 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
         {/* Advertisement button and brand - only for ads */}
         {reel.isAd && (
           <div className="pointer-events-auto mb-2.5 z-10 relative">
-            {/* Pointing hand animation - centered on top of button */}
-            <div className="absolute left-1/2 -top-16 -translate-x-1/2">
+            {/* Pointing hand animation - positioned at 65% from left */}
+            <div className="absolute left-[75%] -top-16 -translate-x-1/2">
               <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: 5 }}
@@ -414,7 +414,7 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
                 className="relative"
               >
                 <motion.div
-                  className="absolute -inset-2 rounded-full bg-yellow-300/30"
+                  className="absolute -inset-2 rounded-full bg-white/30"
                   initial={{ scale: 1, opacity: 0.7 }}
                   animate={{ scale: 1.4, opacity: 0.3 }}
                   transition={{
@@ -424,7 +424,7 @@ const ReelsVideo: React.FC<ReelsVideoProps> = ({ reel, isActive, isMuted, setIsM
                     ease: "easeInOut"
                   }}
                 />
-                <div className="text-5xl relative z-10 filter drop-shadow-lg">👇</div>
+                <div className="text-5xl relative z-10 filter drop-shadow-lg">⬇️</div>
               </motion.div>
             </div>
             
